@@ -1,0 +1,150 @@
+﻿syntax = "proto3";
+
+option go_package ="./goods";
+
+package goods;
+
+// ------------------------------------ 
+// Messages
+// ------------------------------------ 
+
+//--------------------------------goods--------------------------------
+message Goods {
+  int64 id = 1; //id
+  string name = 2; //商品名称
+  double price = 3; //商品价格
+  int64 stock = 4; //库存
+}
+
+message AddGoodsReq {
+  string name = 1; //商品名称
+  double price = 2; //商品价格
+  int64 stock = 3; //库存
+}
+
+message AddGoodsResp {
+}
+
+message UpdateGoodsReq {
+  int64 id = 1; //id
+  string name = 2; //商品名称
+  double price = 3; //商品价格
+  int64 stock = 4; //库存
+}
+
+message UpdateGoodsResp {
+}
+
+message DelGoodsReq {
+  int64 id = 1; //id
+}
+
+message DelGoodsResp {
+}
+
+message GetGoodsByIdReq {
+  int64 id = 1; //id
+}
+
+message GetGoodsByIdResp {
+  Goods goods = 1; //goods
+}
+
+message SearchGoodsReq {
+  int64 page = 1; //page
+  int64 limit = 2; //limit
+  int64 id = 3; //id
+  string name = 4; //商品名称
+  double price = 5; //商品价格
+  int64 stock = 6; //库存
+}
+
+message SearchGoodsResp {
+  repeated Goods goods = 1; //goods
+}
+
+//--------------------------------users--------------------------------
+message Users {
+  int64 id = 1; //id
+  int64 createdAt = 2; //createdAt
+  int64 updatedAt = 3; //updatedAt
+  int64 deletedAt = 4; //deletedAt
+  string username = 5; //用户名
+  string password = 6; //密码
+}
+
+message AddUsersReq {
+  int64 createdAt = 1; //createdAt
+  int64 updatedAt = 2; //updatedAt
+  int64 deletedAt = 3; //deletedAt
+  string username = 4; //用户名
+  string password = 5; //密码
+}
+
+message AddUsersResp {
+}
+
+message UpdateUsersReq {
+  int64 id = 1; //id
+  int64 createdAt = 2; //createdAt
+  int64 updatedAt = 3; //updatedAt
+  int64 deletedAt = 4; //deletedAt
+  string username = 5; //用户名
+  string password = 6; //密码
+}
+
+message UpdateUsersResp {
+}
+
+message DelUsersReq {
+  int64 id = 1; //id
+}
+
+message DelUsersResp {
+}
+
+message GetUsersByIdReq {
+  int64 id = 1; //id
+}
+
+message GetUsersByIdResp {
+  Users users = 1; //users
+}
+
+message SearchUsersReq {
+  int64 page = 1; //page
+  int64 limit = 2; //limit
+  int64 id = 3; //id
+  int64 createdAt = 4; //createdAt
+  int64 updatedAt = 5; //updatedAt
+  int64 deletedAt = 6; //deletedAt
+  string username = 7; //用户名
+  string password = 8; //密码
+}
+
+message SearchUsersResp {
+  repeated Users users = 1; //users
+}
+
+
+
+// ------------------------------------ 
+// Rpc Func
+// ------------------------------------ 
+
+service { 
+
+	 //-----------------------goods----------------------- 
+	 rpc AddGoods(AddGoodsReq) returns (AddGoodsResp); 
+	 rpc UpdateGoods(UpdateGoodsReq) returns (UpdateGoodsResp); 
+	 rpc DelGoods(DelGoodsReq) returns (DelGoodsResp); 
+	 rpc GetGoodsById(GetGoodsByIdReq) returns (GetGoodsByIdResp); 
+	 rpc SearchGoods(SearchGoodsReq) returns (SearchGoodsResp); 
+	 //-----------------------users----------------------- 
+	 rpc AddUsers(AddUsersReq) returns (AddUsersResp); 
+	 rpc UpdateUsers(UpdateUsersReq) returns (UpdateUsersResp); 
+	 rpc DelUsers(DelUsersReq) returns (DelUsersResp); 
+	 rpc GetUsersById(GetUsersByIdReq) returns (GetUsersByIdResp); 
+	 rpc SearchUsers(SearchUsersReq) returns (SearchUsersResp); 
+
+}

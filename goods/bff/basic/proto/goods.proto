@@ -1,0 +1,30 @@
+syntax = "proto3";
+
+package stream;
+
+option go_package = "./";
+
+message LoginReq {
+  string Username = 1;
+  string Password=2;
+}
+message LoginResp {
+  string Msg = 1;
+  int64 Code=2;
+  map<string,string> userMap=3;
+}
+
+message GoodsCreateReq {
+  string Title = 1;
+  float Price=2;
+  int64 Stock=3;
+}
+message GoodsCreateResp {
+  string Msg = 1;
+  int64 Code=2;
+  string goods=3;
+}
+service StreamGreeter {
+  rpc Login(LoginReq) returns (LoginResp);
+  rpc GoodsCreate(GoodsCreateReq) returns (GoodsCreateResp);
+}
