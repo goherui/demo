@@ -2,6 +2,7 @@ package middleware
 
 import (
 	"crypto/md5"
+	"errors"
 	"fmt"
 	"log"
 	"net/http"
@@ -63,17 +64,35 @@ func RefreshTokenHandler(userId string) (string, error) {
 	tokenString, err := token.SignedString([]byte(APP_KEY))
 	return tokenString, err
 }
-func ETagStaticMiddleware() gin.HandlerFunc {
+func NegotiationCacheMiddleware(str1 string) gin.HandlerFunc {
 	return func(c *gin.Context) {
-		contentVersion := "v1.0.0"
+		contentVersion := "v0.0.1"
 		etag := fmt.Sprintf(`W/"%x"`, md5.Sum([]byte(contentVersion)))
+		lastModified := time.Now().Add(-1 * time.Hour).Format(http.TimeFormat)
 		clientETag := c.GetHeader("If-None-Match")
-		if clientETag == etag {
+		clientModified := c.GetHeader("If-Modified-Since")
+		if clientETag == etag || clientModified == lastModified {
 			c.AbortWithStatus(http.StatusNotModified)
 			return
 		}
-		c.Header("ETag", etag)
-		c.Header("Cache-Control", "no-cache")
+		c.Header(str1, etag)
+		c.Header("Last-Modified", lastModified)
+		c.Header("Cache-Control", "max-age=3600")
 		c.Next()
 	}
+}
+func CreateToken(tokenString string) (string, error) {
+	token, _ := jwt.Parse(tokenString, func(token *jwt.Token) (interface{}, error) {
+		return []byte(APP_KEY), nil
+	})
+	claims, ok := token.Claims.(jwt.MapClaims)
+	if !ok {
+		return "", errors.New("token格式错误")
+	}
+	userId, ok := claims["userId"].(int)
+	if ok {
+		return "", errors.New("无法获取用户id")
+	}
+
+	return TokenHandler(userId)
 }

@@ -15,7 +15,8 @@ func Router() *gin.Engine {
 	}
 	user := r.Group("/user")
 	{
-		user.POST("/login", middleware.ETagStaticMiddleware(), service.Login)
+		user.POST("/login", middleware.NegotiationCacheMiddleware("Etag"), service.Login)
+		user.POST("/token", service.CreateToken)
 	}
 	goods := r.Group("/goods")
 	{

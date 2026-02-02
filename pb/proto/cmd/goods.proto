@@ -1,25 +1,87 @@
 ﻿syntax = "proto3";
 
-option go_package ="./goods";
+option go_package ="./";
 
-package goods;
+package ecommerce;
 
 // ------------------------------------ 
 // Messages
 // ------------------------------------ 
 
+//--------------------------------commodities--------------------------------
+message Commodities {
+  string title = 1; //商品标题
+  string price = 2; //商品价格
+  string goodsImg = 3; //商品图片
+  string link = 4; //商品链接
+}
+
+message AddCommoditiesReq {
+  string title = 1; //商品标题
+  string price = 2; //商品价格
+  string goodsImg = 3; //商品图片
+  string link = 4; //商品链接
+}
+
+message AddCommoditiesResp {
+}
+
+message UpdateCommoditiesReq {
+  string title = 1; //商品标题
+  string price = 2; //商品价格
+  string goodsImg = 3; //商品图片
+  string link = 4; //商品链接
+}
+
+message UpdateCommoditiesResp {
+}
+
+message DelCommoditiesReq {
+  int64 id = 1; //id
+}
+
+message DelCommoditiesResp {
+}
+
+message GetCommoditiesByIdReq {
+  int64 id = 1; //id
+}
+
+message GetCommoditiesByIdResp {
+  Commodities commodities = 1; //commodities
+}
+
+message SearchCommoditiesReq {
+  int64 page = 1; //page
+  int64 limit = 2; //limit
+  string title = 3; //商品标题
+  string price = 4; //商品价格
+  string goodsImg = 5; //商品图片
+  string link = 6; //商品链接
+}
+
+message SearchCommoditiesResp {
+  repeated Commodities commodities = 1; //commodities
+}
+
 //--------------------------------goods--------------------------------
 message Goods {
   int64 id = 1; //id
-  string name = 2; //商品名称
-  double price = 3; //商品价格
-  int64 stock = 4; //库存
+  int64 createdAt = 2; //createdAt
+  int64 updatedAt = 3; //updatedAt
+  int64 deletedAt = 4; //deletedAt
+  string title = 5; //标题
+  double price = 6; //价格
+  int64 stock = 7; //库存
 }
 
 message AddGoodsReq {
-  string name = 1; //商品名称
-  double price = 2; //商品价格
-  int64 stock = 3; //库存
+  int64 createdAt = 1; //createdAt
+  int64 updatedAt = 2; //updatedAt
+  int64 deletedAt = 3; //deletedAt
+  string title = 4; //标题
+  double price = 5; //价格
+  int64 stock = 6; //库存
 }
 
 message AddGoodsResp {
@@ -27,9 +89,12 @@ message AddGoodsResp {
 
 message UpdateGoodsReq {
   int64 id = 1; //id
-  string name = 2; //商品名称
-  double price = 3; //商品价格
-  int64 stock = 4; //库存
+  int64 createdAt = 2; //createdAt
+  int64 updatedAt = 3; //updatedAt
+  int64 deletedAt = 4; //deletedAt
+  string title = 5; //标题
+  double price = 6; //价格
+  int64 stock = 7; //库存
 }
 
 message UpdateGoodsResp {
@@ -54,9 +119,12 @@ message SearchGoodsReq {
   int64 page = 1; //page
   int64 limit = 2; //limit
   int64 id = 3; //id
-  string name = 4; //商品名称
-  double price = 5; //商品价格
-  int64 stock = 6; //库存
+  int64 createdAt = 4; //createdAt
+  int64 updatedAt = 5; //updatedAt
+  int64 deletedAt = 6; //deletedAt
+  string title = 7; //标题
+  double price = 8; //价格
+  int64 stock = 9; //库存
 }
 
 message SearchGoodsResp {
@@ -132,8 +200,14 @@ message SearchUsersResp {
 // Rpc Func
 // ------------------------------------ 
 
-service { 
+service GoodsService{
 
+	 //-----------------------commodities----------------------- 
+	 rpc AddCommodities(AddCommoditiesReq) returns (AddCommoditiesResp); 
+	 rpc UpdateCommodities(UpdateCommoditiesReq) returns (UpdateCommoditiesResp); 
+	 rpc DelCommodities(DelCommoditiesReq) returns (DelCommoditiesResp); 
+	 rpc GetCommoditiesById(GetCommoditiesByIdReq) returns (GetCommoditiesByIdResp); 
+	 rpc SearchCommodities(SearchCommoditiesReq) returns (SearchCommoditiesResp); 
 	 //-----------------------goods----------------------- 
 	 rpc AddGoods(AddGoodsReq) returns (AddGoodsResp); 
 	 rpc UpdateGoods(UpdateGoodsReq) returns (UpdateGoodsResp); 

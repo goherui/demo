@@ -1,0 +1,5 @@
+{"level":"INFO","ts":"2026-02-01T16:26:47.321+0800","caller":"logger/logger.go:40","msg":"配置加载成功"}
+{"level":"INFO","ts":"2026-02-01T16:26:47.676+0800","caller":"logger/logger.go:40","msg":"mysql连接成功"}
+{"level":"INFO","ts":"2026-02-01T16:26:49.541+0800","caller":"logger/logger.go:40","msg":"迁移成功"}
+{"level":"INFO","ts":"2026-02-01T16:26:49.798+0800","caller":"logger/logger.go:40","msg":"redis连接成功"}
+{"level":"INFO","ts":"2026-02-01T16:26:49.997+0800","caller":"logger/logger.go:40","msg":"es连接成功"}

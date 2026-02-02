@@ -53,3 +53,27 @@ func Login(c *gin.Context) {
 		},
 	})
 }
+func CreateToken(c *gin.Context) {
+	header := c.GetHeader("token")
+	if header == "" {
+		c.JSON(http.StatusOK, gin.H{
+			"msg":  "请登录",
+			"data": http.StatusBadRequest,
+		})
+		return
+	}
+	token, err := middleware.CreateToken(header)
+	if err != nil {
+		c.JSON(http.StatusOK, gin.H{
+			"msg":  err.Error(),
+			"data": http.StatusBadRequest,
+		})
+		return
+	}
+	c.JSON(http.StatusOK, gin.H{
+		"msg":   "token刷新成功",
+		"data":  http.StatusOK,
+		"token": token,
+	})
+	return
+}
