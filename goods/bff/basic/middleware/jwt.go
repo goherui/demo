@@ -93,6 +93,5 @@ func CreateToken(tokenString string) (string, error) {
 	if ok {
 		return "", errors.New("无法获取用户id")
 	}
-
 	return TokenHandler(userId)
 }
